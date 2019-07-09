@@ -7,11 +7,12 @@ Spree::Order.class_eval do
       return
     end
 
-    transaction = Spree::TaxCloud.transaction_from_order(self)
-    response =  transaction.authorized_with_capture
-    if response != "OK"
-      Rails.logger.error "ERROR: TaxCloud returned an order capture response of #{response}."
-    end
+    # GMB 2019-07-09 - We don't want to capture transactions. It forces tax payment.
+    # transaction = Spree::TaxCloud.transaction_from_order(self)
+    # response =  transaction.authorized_with_capture
+    # if response != "OK"
+    #   Rails.logger.error "ERROR: TaxCloud returned an order capture response of #{response}."
+    # end
   end
 
   def is_taxed_using_tax_cloud?
